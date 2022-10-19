@@ -1,8 +1,22 @@
+using FinalProject;
 using FinalProject.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy(SD.ManagerAndAdministrator, policy =>
+        policy.RequireRole(SD.AdministratorRole).RequireRole(SD.ManagerRole));
+});
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("ManagerOrAdministrator", policy =>
+        policy.RequireRole("AdministratorRole", "ManagerRole"));
+});
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -11,6 +25,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
