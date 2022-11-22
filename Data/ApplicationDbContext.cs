@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using FinalProject.Models;
 
 namespace FinalProject.Data
 {
@@ -9,5 +10,7 @@ namespace FinalProject.Data
             : base(options)
         {
         }
+        public DbSet<FinalProject.Models.Artist> Artist { get; set; }
+        public DbSet<FinalProject.Models.Album> Album { get; set; }
     }
 }
