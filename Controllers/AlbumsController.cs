@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FinalProject.Data;
 using FinalProject.Models;
+using System.Numerics;
 
 namespace FinalProject.Controllers
 {
@@ -17,6 +18,20 @@ namespace FinalProject.Controllers
         public AlbumsController(ApplicationDbContext context)
         {
             _context = context;
+        }
+
+        public async Task<IActionResult> GetAlbumArt(int id)
+        {
+            var album = await _context.Album
+                    .FirstOrDefaultAsync(m => m.Id == id);
+            if (album == null)
+            {
+
+                return NotFound();
+            }
+            var imageData = album.AlbumArt;
+
+            return File(imageData, "image/jpg");
         }
 
         // GET: Albums
@@ -48,7 +63,7 @@ namespace FinalProject.Controllers
         // GET: Albums/Create
         public IActionResult Create()
         {
-            ViewData["ArtistID"] = new SelectList(_context.Artist, "Id", "Id");
+            ViewData["ArtistID"] = new SelectList(_context.Artist, "Id", "Name");
             return View();
         }
 
@@ -57,15 +72,21 @@ namespace FinalProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,AlbumName,ReleaseDate,Genre,Description,AlbumArt,Price,ArtistID")] Album album)
+        public async Task<IActionResult> Create([Bind("Id,AlbumName,ReleaseDate,Genre,Description,Price,ArtistID")] Album album, IFormFile AlbumArt)
         {
             if (ModelState.IsValid)
             {
+                if (AlbumArt != null && AlbumArt.Length > 0)
+                {
+                    var memoryStream = new MemoryStream();
+                    await AlbumArt.CopyToAsync(memoryStream);
+                    album.AlbumArt = memoryStream.ToArray();
+                }
                 _context.Add(album);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ArtistID"] = new SelectList(_context.Artist, "Id", "Id", album.ArtistID);
+            ViewData["ArtistID"] = new SelectList(_context.Artist, "Id", "Name", album.ArtistID);
             return View(album);
         }
 
@@ -82,7 +103,7 @@ namespace FinalProject.Controllers
             {
                 return NotFound();
             }
-            ViewData["ArtistID"] = new SelectList(_context.Artist, "Id", "Id", album.ArtistID);
+            ViewData["ArtistID"] = new SelectList(_context.Artist, "Id", "Name", album.ArtistID);
             return View(album);
         }
 
@@ -118,7 +139,7 @@ namespace FinalProject.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ArtistID"] = new SelectList(_context.Artist, "Id", "Id", album.ArtistID);
+            ViewData["ArtistID"] = new SelectList(_context.Artist, "Id", "Name", album.ArtistID);
             return View(album);
         }
 

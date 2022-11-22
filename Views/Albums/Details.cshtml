@@ -38,7 +38,10 @@
             @Html.DisplayNameFor(model => model.AlbumArt)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AlbumArt)
+            @if (Model.AlbumArt != null)
+            {
+                <img width="150" height="150" src="@Url.Action("GetAlbumArt", "Albums", new {Model.Id})">
+            }
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Price)
@@ -50,7 +53,7 @@
             @Html.DisplayNameFor(model => model.Artist)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Artist.Id)
+            @Html.DisplayFor(model => model.Artist.Name)
         </dd>
     </dl>
 </div>

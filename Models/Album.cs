@@ -12,7 +12,7 @@ namespace FinalProject.Models
         public byte[]? AlbumArt { get; set; }
         public float Price { get; set; }
         [ForeignKey("Artist")]
-        public int ArtistID { get; set; }
-        public Artist Artist { get; set; }
+        public int? ArtistID { get; set; }
+        public Artist? Artist { get; set; }
     }
 }

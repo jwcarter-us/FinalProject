@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FinalProject.Data;
 using FinalProject.Models;
+using System.Numerics;
 
 namespace FinalProject.Controllers
 {
@@ -17,6 +18,19 @@ namespace FinalProject.Controllers
         public ArtistsController(ApplicationDbContext context)
         {
             _context = context;
+        }
+
+        public async Task<IActionResult> GetArtistPhoto(int id)
+        {
+            var artist = await _context.Artist
+                    .FirstOrDefaultAsync(m => m.Id == id);
+            if (artist == null)
+            {
+                return NotFound();
+            }
+            var imageData = artist.ArtistPicture;
+
+            return File(imageData, "image/jpg");
         }
 
         // GET: Artists
@@ -54,10 +68,16 @@ namespace FinalProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,ArtistPicture,Birthday,BirthPlace,Label")] Artist artist)
+        public async Task<IActionResult> Create([Bind("Id,Name,Birthday,BirthPlace,Label")] Artist artist, IFormFile ArtistPicture)
         {
             if (ModelState.IsValid)
             {
+                if (ArtistPicture != null && ArtistPicture.Length > 0)
+                {
+                    var memoryStream = new MemoryStream();
+                    await ArtistPicture.CopyToAsync(memoryStream);
+                    artist.ArtistPicture = memoryStream.ToArray();
+                }
                 _context.Add(artist);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

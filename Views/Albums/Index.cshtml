@@ -52,13 +52,16 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AlbumArt)
+                    @if (item.AlbumArt != null)
+                    {
+                        <img width="150" height="150" src="@Url.Action("GetAlbumArt", "Albums", new {item.Id})">
+                    }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Artist.Id)
+                @Html.DisplayFor(modelItem => item.Artist.Name)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
