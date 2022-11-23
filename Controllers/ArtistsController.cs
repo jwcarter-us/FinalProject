@@ -53,8 +53,14 @@ namespace FinalProject.Controllers
             {
                 return NotFound();
             }
+            ArtistAlbumVM aaVM = new ArtistAlbumVM();
+            aaVM.Artist = artist;
+            var sAlbums = await _context.Album.Include(a => a.Artist).Where(a => a.ArtistID == id).ToListAsync();
+            aaVM.Albums = sAlbums;
 
-            return View(artist);
+            //_context.ArtistAlbums.Include(a => a.Album).Include(a => a.Artist)
+
+            return View(aaVM);
         }
 
         // GET: Artists/Create

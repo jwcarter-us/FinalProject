@@ -1,51 +1,102 @@
-﻿@model FinalProject.Models.Artist
+﻿@model ArtistAlbumVM
 
 @{
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>@Html.DisplayFor(model => model.Artist.Name)</h1>
 
 <div>
-    <h4>Artist</h4>
+    <h4>Artist Bio</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+        <dt class = "col-sm-2"> 
+            Headshot
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ArtistPicture)
-        </dt>
-        <dd class = "col-sm-10">
-            @if (Model.ArtistPicture != null)
+            @if (Model.Artist.ArtistPicture != null)
             {
-                <img width="100" height="150" src="@Url.Action("GetArtistPhoto", "Artists", new {Model.Id})">
+                <img width="100" height="150" src="@Url.Action("GetArtistPhoto", "Artists", new {Model.Artist.Id})">
             }
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Birthday)
+            @Html.DisplayNameFor(model => model.Artist.Birthday)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Birthday)
+            @Html.DisplayFor(model => model.Artist.Birthday)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.BirthPlace)
+            Hometown
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.BirthPlace)
+            @Html.DisplayFor(model => model.Artist.BirthPlace)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Label)
+            Record Label
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Label)
+            @Html.DisplayFor(model => model.Artist.Label)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model?.Artist.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+<div>
+    <h3>Discography</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Album Title
+                </th>
+                <th>
+                    Release Date
+                </th>
+                <th>
+                    Genre
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Albums[0].Description)
+                </th>
+                <th>
+                    Cover Art
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Albums[0].Price)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Albums)
+            {
+                <tr>
+                    <td>
+                        <a asp-action="Details" asp-controller="Albums" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.AlbumName)</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ReleaseDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Genre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @if (item.AlbumArt != null)
+                        {
+                            <img width="150" height="150" src="@Url.Action("GetAlbumArt", "Albums", new {item.Id})">
+                        }
+                    </td>
+                    <td>
+                        $@Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

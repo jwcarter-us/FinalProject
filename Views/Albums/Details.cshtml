@@ -4,20 +4,23 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>@Html.DisplayFor(model => model.AlbumName)</h1>
 
 <div>
-    <h4>Album</h4>
-    <hr />
+    <h4>Artist: <a asp-action="Details" asp-controller="Artists" asp-route-id="@Model.Id">@Html.DisplayFor(model => model.Artist.Name)</a></h4>
+    <hr/>
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AlbumName)
+        <dt class="col-sm-2">
+            Album Art
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AlbumName)
+        <dd class="col-sm-10">
+            @if (Model.AlbumArt != null)
+            {
+                <img width="150" height="150" src="@Url.Action("GetAlbumArt", "Albums", new {Model.Id})">
+            }
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ReleaseDate)
+            Release Date
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.ReleaseDate)
@@ -35,27 +38,13 @@
             @Html.DisplayFor(model => model.Description)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AlbumArt)
-        </dt>
-        <dd class = "col-sm-10">
-            @if (Model.AlbumArt != null)
-            {
-                <img width="150" height="150" src="@Url.Action("GetAlbumArt", "Albums", new {Model.Id})">
-            }
-        </dd>
-        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Price)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Artist)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Artist.Name)
+            $@Html.DisplayFor(model => model.Price)
         </dd>
     </dl>
+    <button type="button">Add to Cart</button>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
