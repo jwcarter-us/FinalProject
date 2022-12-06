@@ -112,7 +112,7 @@ namespace FinalProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,AlbumName,ReleaseDate,Genre,Description,AlbumArt,Price,ArtistID")] Album album)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,AlbumName,ReleaseDate,Genre,Description,Price,ArtistID")] Album album, IFormFile AlbumArt)
         {
             if (id != album.Id)
             {
@@ -123,6 +123,12 @@ namespace FinalProject.Controllers
             {
                 try
                 {
+                    if (AlbumArt != null && AlbumArt.Length > 0)
+                    {
+                        var memoryStream = new MemoryStream();
+                        await AlbumArt.CopyToAsync(memoryStream);
+                        album.AlbumArt = memoryStream.ToArray();
+                    }
                     _context.Update(album);
                     await _context.SaveChangesAsync();
                 }

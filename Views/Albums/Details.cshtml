@@ -7,7 +7,7 @@
 <h1>@Html.DisplayFor(model => model.AlbumName)</h1>
 
 <div>
-    <h4>Artist: <a asp-action="Details" asp-controller="Artists" asp-route-id="@Model.Id">@Html.DisplayFor(model => model.Artist.Name)</a></h4>
+    <h4>Artist: <a asp-action="Details" asp-controller="Artists" asp-route-id="@Model.ArtistID">@Html.DisplayFor(model => model.Artist.Name)</a></h4>
     <hr/>
     <dl class="row">
         <dt class="col-sm-2">

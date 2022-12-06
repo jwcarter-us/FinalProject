@@ -1,0 +1,93 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<head>
+    <script src="https://code.jquery.com/jquery-2.2.4.js" charset="utf-8"></script>
+    <meta name="robots" content="noindex,follow" />
+    <link rel="stylesheet" href="/css/cart/cart.css" media="screen" title="no title" charset="utf-8">
+    <meta name="robots" content="noindex,follow" />
+</head>
+<body>
+    <div class="title">
+        Shopping Bag
+    </div>
+    <div class="shopping-cart">
+        @*    @foreach (var item in Model)
+        {*@
+        <div class="item">
+            <div class="buttons">
+                <span class="delete-btn"></span>
+                <span class="like-btn"></span>
+            </div>
+
+            <div class="image">
+                <img src="https://www.applesfromny.com/wp-content/uploads/2020/06/EmpireNEW.png" alt="" width="100" height="100" />
+            </div>
+
+            <div class="description">
+                <span>@*   @Html.DisplayFor(modelItem => item.AlbumName)  *@TESTING</span>
+                <span>@*   @Html.DisplayFor(modelItem => item.Artist.Name) *@A$AP ROCKY</span>
+            </div>
+
+            <div class="quantity">
+                <button id="quantityb" class="plus-btn" type="button" name="button">
+                    <img src="/css/cart/plus.svg" alt="" />
+                </button>
+                <input type="text" name="name" value="1">
+                
+                <button id="quantityb" class="minus-btn" type="button" name="button">
+                    <img src="~/css/cart/minus.svg" alt="" />
+                </button>
+                
+            </div>
+            <div type="text" name="name" value="15" id="total-price">15</div>
+           
+            
+        </input>
+        @*}*@
+    </div>
+
+    <script type="text/javascript">
+        $('.minus-btn').on('click', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var $input = $this.closest('div').find('input');
+            var $price = parseInt(document.getElementById("total-price").val);
+            var value = parseInt($input.val())
+            if (value > 1) {
+                value = value - 1;
+            } else {
+                value = 0;
+            }
+            document.getElementById("total-price").innerHTML = value*$price;
+          
+            $input.val(value);
+
+        });
+
+        $('.plus-btn').on('click', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var $input = $this.closest('div').find('input');
+            var value = parseInt($input.val());
+
+            if (value < 100) {
+                value = value + 1;
+            } else {
+                value = 100;
+            }
+
+            $input.val(value);
+        });
+
+        $('.like-btn').on('click', function () {
+            $(this).toggleClass('is-active');
+        });
+    </script>
+</body>

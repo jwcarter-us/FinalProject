@@ -8,6 +8,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\css\cart\cart.css" />
+    <None Include="wwwroot\css\cart\delete-icn.svg" />
+    <None Include="wwwroot\css\cart\item-1.png" />
+    <None Include="wwwroot\css\cart\item-2.png" />
+    <None Include="wwwroot\css\cart\item-3.png" />
+    <None Include="wwwroot\css\cart\minus.svg" />
+    <None Include="wwwroot\css\cart\plus.svg" />
+    <None Include="wwwroot\css\cart\twitter-heart.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.8" />
