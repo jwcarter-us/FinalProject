@@ -1,0 +1,22 @@
+﻿body {
+}
+
+#myInput {
+    background-image: url("search-icon.png"); /* Add a search icon to input */
+    background-position: 10px 12px; /* Position the search icon */
+    background-repeat: no-repeat; /* Do not repeat the icon image */
+    background-size: 5.5%;
+    width: 40%; /* Full-width */
+    
+    font-size: 16px; /* Increase font-size */
+    padding: 12px 15px 12px 45px; /* Add some padding */
+    border: 1px solid #ddd; /* Add a grey border */
+    margin-bottom: 12px; /* Add some space below the input */
+}
+
+#shoppingList {
+    /* Remove default list styling */
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}

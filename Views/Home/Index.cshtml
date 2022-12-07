@@ -3,6 +3,9 @@
 @{
     ViewData["Title"] = "Index";
 }
+<head>
+    <link rel="stylesheet" href="~/css/homepage/filter.css" media="screen" title="no title" charset="utf-8">
+</head>
 
 <body>
     <!-- Header-->
@@ -16,11 +19,17 @@
     </header>
     <!-- Section-->
     <section class="py-5">
+        <div id="filter">
+            <input type="text" id="myInput" onkeyup="filterAlbum()" placeholder="Search for Artist, Album, or Genre...">
+        </div>
         <div class="container px-4 px-lg-5 mt-5">
-            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            
+            <div id="shoppingList" class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                 @foreach (var item in Model)
                 {
-                    <div class="col mb-5">
+
+
+                    <div class="col mb-5" id="">
                         <div class="card h-100">
                             <!-- Product image-->
                             <img class="card-img-top" src="@Url.Action("GetAlbumArt", "Albums", new {item.Id})" alt="..." />
@@ -32,6 +41,7 @@
                                     <h6 class="fw-bold">@Html.DisplayFor(modelItem => item.Artist.Name)</h6>
                                     <!-- Product price-->
                                     <p class="fst-italic">$@Html.DisplayFor(modelItem => item.Price)</p>
+                                    <input class="genre" type="text" name="name" value=@Html.DisplayFor(modelItem => item.Genre) hidden="hidden">
                                 </div>
                             </div>
                             <!-- Product actions-->
@@ -47,6 +57,39 @@
             
 
         </div>
+        <script>
+            function filterAlbum() {
+                var input, filter, ul, li, a, i, txtValue;
+                input = document.getElementById('myInput');
+                filter = input.value.toUpperCase();
+                sl = document.getElementById("shoppingList");
+                alb = sl.getElementsByClassName("col mb-5");
+
+                            // Loop through all list items, and hide those who don't match the search query
+                for (i = 0; i < alb.length; i++) {
+                    a = alb[i].getElementsByClassName("fw-bolder")[0];
+                    b = alb[i].getElementsByClassName("fw-bold")[0];
+                    c = alb[i].getElementsByClassName("genre")[0];
+                    txtValue = a.textContent || a.innerText;
+                    txtValue2= b.textContent || b.innerText;
+                    txtValue3 = c.value;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        alb[i].style.display = "";
+                    } else {
+                        if (txtValue2.toUpperCase().indexOf(filter) > -1) {
+                            alb[i].style.display = "";
+                        } else {
+                            if (txtValue3.toUpperCase().indexOf(filter) > -1) {
+                                alb[i].style.display = "";
+                            } else {
+                                alb[i].style.display = "none";
+                            }
+                        }
+                    }
+
+                }
+            }
+        </script>
 
     </section>
     <!-- Bootstrap core JS-->
@@ -54,6 +97,7 @@
     <!-- Core theme JS-->
     <script src="js/scripts.js"></script>
 </body>
+
 
 
 
