@@ -18,8 +18,8 @@
         Shopping Bag
     </div>
     <div class="shopping-cart">
-        @*    @foreach (var item in Model)
-        {*@
+        @foreach (var item in Model.AlbumList)
+        {
         <div class="item">
             <div class="buttons">
                 <span class="delete-btn"></span>
@@ -27,12 +27,12 @@
             </div>
 
             <div class="image">
-                <img src="https://www.applesfromny.com/wp-content/uploads/2020/06/EmpireNEW.png" alt="" width="100" height="100" />
+                    <img src="@Url.Action("GetAlbumArt", "Albums", new {item.Id})" alt="" width="100" height="100" />
             </div>
 
             <div class="description">
-                <span>@*   @Html.DisplayFor(modelItem => item.AlbumName)  *@TESTING</span>
-                <span>@*   @Html.DisplayFor(modelItem => item.Artist.Name) *@A$AP ROCKY</span>
+                <span>@item.AlbumName</span>
+                <span>@item.Artist.Name</span>
             </div>
 
             <div class="quantity">
@@ -46,12 +46,11 @@
                 </button>
                 
             </div>
-            <div type="text" name="name" value="15" id="total-price">15</div>
+            <div type="text" name="name" value="15" id="total-price">@item.Price</div>
            
             
-        </input>
-        @*}*@
-    </div>
+        </div>
+        }
 
     <script type="text/javascript">
         $('.minus-btn').on('click', function (e) {

@@ -16,6 +16,12 @@ namespace FinalProject.Controllers
         public HomeController(ApplicationDbContext context)
         {
             _context = context;
+            CartVM = new CartVM()
+            {
+                OrderHeader = new Models.OrderHeader(),
+                AlbumList = new List<Album>()
+
+            };
         }
         public async Task<IActionResult> GetAlbumArt(int id)
         {
@@ -62,10 +68,25 @@ namespace FinalProject.Controllers
         {
             return View();
         }
+        [BindProperty]
+        public CartVM CartVM { get; set; }
 
-        public IActionResult checkout()
+        public async Task<IActionResult> checkout()
         {
-            return View();
+            var applicationDbContext = _context.Album.Include(a => a.Artist);
+            if (HttpContext.Session.GetObject<List<int>>(SD.SessionCart) != null)
+            {
+                List<int> albumList = new List<int>();
+                albumList = HttpContext.Session.GetObject<List<int>>(SD.SessionCart);
+                foreach (int albumId in albumList)
+                {
+                    var album = await _context.Album
+                    .Include(a => a.Artist)
+                    .FirstOrDefaultAsync(m => m.Id == albumId);
+                    CartVM.AlbumList.Add(album);
+                }
+            }
+            return View(CartVM);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
