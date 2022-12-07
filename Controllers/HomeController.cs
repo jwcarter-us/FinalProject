@@ -37,6 +37,8 @@ namespace FinalProject.Controllers
             return File(imageData, "image/jpg");
         }
 
+
+
         public IActionResult AddToCart(int serviceId)
         {
             List<int> sessionList = new List<int>();
@@ -57,12 +59,23 @@ namespace FinalProject.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
+        public IActionResult Remove(int serviceId)
+        {
+            List<int> sessionList = new List<int>();
+            sessionList = HttpContext.Session.GetObject<List<int>>(SD.SessionCart);
+            sessionList.Remove(serviceId);
+            HttpContext.Session.SetObject(SD.SessionCart, sessionList);
+
+            return RedirectToAction(nameof(checkout));
+
+        }
 
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Album.Include(a => a.Artist);
             return View(await applicationDbContext.ToListAsync());
         }
+
 
         public IActionResult Privacy()
         {

@@ -26,7 +26,7 @@
             orderTotal += item.Price;
             <div class="item">
             <div class="buttons">
-                <span class="delete-btn"></span>
+                <a asp-action="Remove" asp-route-serviceId=@item.Id class="btn btn-outline-danger"><i class="fas fa-trash"></i></a>
                 <span class="like-btn"></span>
             </div>
 
@@ -38,6 +38,9 @@
                 <span>@item.AlbumName</span>
                 <span>@item.Artist.Name</span>
             </div>
+                <div class="text-center">
+                    
+                </div>
 
             <div class="quantity">
                 <button id="quantityb" class="plus-btn" type="button" name="button">
@@ -53,11 +56,12 @@
             <div type="text" name="name" value="15" id="total-price">@item.Price.ToString("c")</div>
            
             
-        </div>
+            </div>
         }
+    </div>
         
         <div>
-            <p class="text-success h5">Total (USD): &nbsp;&nbsp; $@orderTotal</p>
+            <p class="text-success h5">Total (USD): &nbsp;&nbsp; @orderTotal.ToString("c")</p>
         </div>
 
     <script type="text/javascript">
