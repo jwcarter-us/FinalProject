@@ -18,9 +18,13 @@
         Shopping Bag
     </div>
     <div class="shopping-cart">
+        @{
+            var orderTotal = 0.0;
+        }
         @foreach (var item in Model.AlbumList)
         {
-        <div class="item">
+            orderTotal += item.Price;
+            <div class="item">
             <div class="buttons">
                 <span class="delete-btn"></span>
                 <span class="like-btn"></span>
@@ -46,11 +50,15 @@
                 </button>
                 
             </div>
-            <div type="text" name="name" value="15" id="total-price">@item.Price</div>
+            <div type="text" name="name" value="15" id="total-price">@item.Price.ToString("c")</div>
            
             
         </div>
         }
+        
+        <div>
+            <p class="text-success h5">Total (USD): &nbsp;&nbsp; $@orderTotal</p>
+        </div>
 
     <script type="text/javascript">
         $('.minus-btn').on('click', function (e) {
