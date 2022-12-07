@@ -13,5 +13,6 @@ namespace FinalProject.Data
         public DbSet<FinalProject.Models.Artist> Artist { get; set; }
         public DbSet<FinalProject.Models.Album> Album { get; set; }
         public DbSet<FinalProject.Models.ArtistAlbums> ArtistAlbums { get; set; }
+        public DbSet<FinalProject.Models.OrderHeader> OrderHeader { get; set; }
     }
 }
