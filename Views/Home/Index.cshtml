@@ -41,14 +41,16 @@
                                     <h6 class="fw-bold">@Html.DisplayFor(modelItem => item.Artist.Name)</h6>
                                     <!-- Product price-->
                                     <p class="fst-italic">$@Html.DisplayFor(modelItem => item.Price)</p>
-                                    <input class="genre" type="text" name="name" value=@Html.DisplayFor(modelItem => item.Genre) hidden="hidden">
+                                    <a class="genre" hidden="hidden"> @Html.DisplayFor(modelItem => item.Genre) </a>
                                 </div>
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                                 <div class="text-center"><a asp-action="Details" asp-controller="Albums" asp-route-id="@item.Id" class="btn btn-outline-dark mt-auto">View details</a></div>
                                 <p></p>
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto">Add to cart</a></div>
+                                <div class="text-center">
+                                    <a asp-action="AddToCart" asp-route-serviceId=@item.Id class="btn btn-outline-dark mt-auto">Add to cart</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -72,7 +74,7 @@
                     c = alb[i].getElementsByClassName("genre")[0];
                     txtValue = a.textContent || a.innerText;
                     txtValue2= b.textContent || b.innerText;
-                    txtValue3 = c.value;
+                    txtValue3 = c.textContent || c.innerText;
                     if (txtValue.toUpperCase().indexOf(filter) > -1) {
                         alb[i].style.display = "";
                     } else {

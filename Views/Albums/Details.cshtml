@@ -44,7 +44,9 @@
             $@Html.DisplayFor(model => model.Price)
         </dd>
     </dl>
-    <button type="button">Add to Cart</button>
+    <div class="text-center">
+        <a asp-action="AddToCart" asp-route-serviceId=@Model.Id class="btn btn-outline-dark mt-auto">Add to cart</a>
+    </div>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |

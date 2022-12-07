@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using FinalProject.Extentions;
 
 namespace FinalProject.Controllers
 {
@@ -28,6 +29,27 @@ namespace FinalProject.Controllers
             var imageData = album.AlbumArt;
 
             return File(imageData, "image/jpg");
+        }
+
+        public IActionResult AddToCart(int serviceId)
+        {
+            List<int> sessionList = new List<int>();
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString(SD.SessionCart)))
+            {
+                sessionList.Add(serviceId);
+                HttpContext.Session.SetObject(SD.SessionCart, sessionList);
+
+            }
+            else
+            {
+                sessionList = HttpContext.Session.GetObject<List<int>> (SD.SessionCart);
+                if(!sessionList.Contains(serviceId))
+                {
+                    sessionList.Add(serviceId);
+                    HttpContext.Session.SetObject(SD.SessionCart, sessionList);
+                }
+            }
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Index()

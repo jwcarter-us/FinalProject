@@ -1,4 +1,7 @@
-﻿<header>
+﻿@using Microsoft.AspNetCore.Http
+@using FinalProject.Extentions
+@inject IHttpContextAccessor HttpContextAccerssor
+<header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="container-fluid">
             <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Bongo Beat</a>
@@ -25,11 +28,27 @@
                     </li>
                 </ul>
                 <form class="d-flex">
+                @if(HttpContextAccerssor.HttpContext.Session.GetObject<List<int>>(SD.SessionCart) != null)
+                {
+
+                    
+                    <button class="btn btn-outline-dark" type="submit" asp-controller="Home" asp-action="checkout"  >
+                        <i class="bi-cart-fill me-1"></i>
+                        Cart
+                        @{
+                            var count = HttpContextAccerssor.HttpContext.Session.GetObject<List<int>>(SD.SessionCart).Count;
+                        }
+                        <span class="badge bg-dark text-white ms-1 rounded-pill">@count</span>
+                    </button>
+                }
+                else
+                {
                     <button class="btn btn-outline-dark" type="submit" asp-controller="Home" asp-action="checkout"  >
                         <i class="bi-cart-fill me-1"></i>
                         Cart
                         <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
                     </button>
+                }
                 </form>
                 <partial name="_LoginPartial" />
             </div>
