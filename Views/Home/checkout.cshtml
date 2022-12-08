@@ -17,52 +17,63 @@
     <div class="title">
         Shopping Bag
     </div>
-    <div class="shopping-cart">
-        @{
-            var orderTotal = 0.0;
-        }
-        @foreach (var item in Model.AlbumList)
-        {
-            orderTotal += item.Price;
-            <div class="item">
-            <div class="buttons">
-                <a asp-action="Remove" asp-route-serviceId=@item.Id class="btn btn-outline-danger"><i class="fas fa-trash"></i></a>
-                <span class="like-btn"></span>
-            </div>
+    @if (Model.AlbumList.Count > 0)
+    {
+        <div class="shopping-cart d-flex">
+            @{
+                var orderTotal = 0.0;
+            }
+            @foreach (var item in Model.AlbumList)
+            {
+                orderTotal += item.Price;
+                <div class="item">
+                    <div class="buttons">
+                        <a asp-action="Remove" asp-route-serviceId=@item.Id class="btn btn-outline-danger"><i class="fas fa-trash"></i></a>
+                        <span class="like-btn"></span>
+                    </div>
 
-            <div class="image">
-                    <img src="@Url.Action("GetAlbumArt", "Albums", new {item.Id})" alt="" width="100" height="100" />
-            </div>
+                    <div class="image">
+                        <img src="@Url.Action("GetAlbumArt", "Albums", new {item.Id})" alt="" width="100" height="100" />
+                    </div>
 
-            <div class="description">
-                <span>@item.AlbumName</span>
-                <span>@item.Artist.Name</span>
-            </div>
-                <div class="text-center">
-                    
+                    <div class="description">
+                        <span>@item.AlbumName</span>
+                        <span>@item.Artist.Name</span>
+                    </div>
+                    <div class="text-center">
+
+                    </div>
+
+                    <div class="quantity">
+                        <button id="quantityb" class="plus-btn" type="button" name="button">
+                            <img src="/css/cart/plus.svg" alt="" />
+                        </button>
+                        <input type="text" name="name" value="1">
+
+                        <button id="quantityb" class="minus-btn" type="button" name="button">
+                            <img src="~/css/cart/minus.svg" alt="" />
+                        </button>
+
+                    </div>
+                    <div type="text" name="name" value="15" id="total-price">@item.Price.ToString("c")</div>
+
+
                 </div>
-
-            <div class="quantity">
-                <button id="quantityb" class="plus-btn" type="button" name="button">
-                    <img src="/css/cart/plus.svg" alt="" />
-                </button>
-                <input type="text" name="name" value="1">
-                
-                <button id="quantityb" class="minus-btn" type="button" name="button">
-                    <img src="~/css/cart/minus.svg" alt="" />
-                </button>
-                
-            </div>
-            <div type="text" name="name" value="15" id="total-price">@item.Price.ToString("c")</div>
-           
-            
-            </div>
-        }
-    </div>
-        
-        <div>
-            <p class="text-success h5">Total (USD): &nbsp;&nbsp; @orderTotal.ToString("c")</p>
+            }
         </div>
+        <div class="card-footer">
+            <div  class ="text-left">
+                <p id="totalprice" class="text-success h5">Total (USD): &nbsp;&nbsp; @orderTotal.ToString("c")</p>
+            </div>
+         
+            <div class="col-12 col-md-6 offset-md-6 col-lg-4 offset-lg-8 text-right">
+                <a asp-action="RingUp" asp-controller="Home" class="btn btn-success form-control">Check Out</a>
+            </div>
+        </div>
+     }
+     else{
+         <div class="backgroundWhite">No items to the shopping cart</div>
+     }
 
     <script type="text/javascript">
         $('.minus-btn').on('click', function (e) {

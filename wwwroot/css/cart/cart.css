@@ -183,7 +183,10 @@ input:focus {
     color: #43484D;
     font-weight: 300;
 }
-
+#totalprice {
+    width: 20%;
+    margin: 1px
+}
 /* Responsive */
 @media (max-width: 800px) {
     .shopping-cart {

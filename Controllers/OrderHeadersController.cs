@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FinalProject.Data;
 using FinalProject.Models;
+using FinalProject.Extentions;
 
 namespace FinalProject.Controllers
 {
@@ -42,7 +43,6 @@ namespace FinalProject.Controllers
 
             return View(orderHeader);
         }
-
         // GET: OrderHeaders/Create
         public IActionResult Create()
         {

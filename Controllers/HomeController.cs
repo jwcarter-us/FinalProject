@@ -102,6 +102,77 @@ namespace FinalProject.Controllers
             return View(CartVM);
         }
 
+        public async Task<IActionResult> RingUp()
+        {
+            if (HttpContext.Session.GetObject<List<int>>(SD.SessionCart) != null)
+            {
+                List<int> albumList = new List<int>();
+                albumList = HttpContext.Session.GetObject<List<int>>(SD.SessionCart);
+                foreach (int albumId in albumList)
+                {
+                    var album = await _context.Album
+                    .Include(a => a.Artist)
+                    .FirstOrDefaultAsync(m => m.Id == albumId);
+                    CartVM.AlbumList.Add(album);
+                }
+            }
+            return View(CartVM);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ActionName("Order")]
+        public async Task<IActionResult> OrderPOST()
+        {
+            if (HttpContext.Session.GetObject<List<int>>(SD.SessionCart) != null)
+            {
+                List<int> albumList = new List<int>();
+                albumList = HttpContext.Session.GetObject<List<int>>(SD.SessionCart);
+                foreach (int albumId in albumList)
+                {
+                    var album = await _context.Album
+                    .Include(a => a.Artist)
+                    .FirstOrDefaultAsync(m => m.Id == albumId);
+                    CartVM.AlbumList.Add(album);
+                }
+            }
+            if(!ModelState.IsValid)
+            {
+                return View(CartVM);
+            }
+            else
+            {
+                CartVM.OrderHeader.OrderDate = DateTime.Now;
+                CartVM.OrderHeader.Status = SD.StatusSubmitted;
+                CartVM.OrderHeader.AlbumCount = CartVM.AlbumList.Count;
+                _context.Add(CartVM.OrderHeader);
+                await _context.SaveChangesAsync();
+
+                foreach(var item in CartVM.AlbumList)
+                {
+                    OrderDetails orderDetails = new OrderDetails
+                    {
+                        AlbumId = item.Id,
+                        OrderHeaderId = CartVM.OrderHeader.Id,
+                        ServiceName = item.AlbumName,
+                        Price = (int)item.Price
+                    };
+                    _context.Add(orderDetails);
+                    
+                }
+                await _context.SaveChangesAsync();
+                HttpContext.Session.SetObject(SD.SessionCart, new List<int>());
+                return RedirectToAction("OrderConfirmation", new { id = CartVM.OrderHeader.Id});
+
+            }
+            
+        }
+
+        public IActionResult OrderConfirmation(int id)
+        {
+            HttpContext.Session.SetObject(SD.SessionCart, new List<int>());
+            return View(id);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
