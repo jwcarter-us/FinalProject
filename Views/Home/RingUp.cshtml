@@ -12,17 +12,13 @@
 
 <head>
     <script src="https://code.jquery.com/jquery-2.2.4.js" charset="utf-8"></script>
-    <meta name="robots" content="noindex,follow" />
-    <link rel="stylesheet" href="/css/cart/cart.css" media="screen" title="no title" charset="utf-8">
-    <meta name="robots" content="noindex,follow" />
+    <link rel="stylesheet" href="/css/cart/CartPage.css" media="screen" title="no title" charset="utf-8">
 </head>
 <body>
     <div class="title">
         Order Summary
     </div>
-    <div class="col-12 col-md-6 offset-md-6 col-lg-4 offset-lg-8 text-right">
-        <a asp-action="checkout" asp-controller="Home" class="btn btn-outline-info form-control btn-sm">Back to Cart</a>
-    </div>
+
     @if (Model.AlbumList.Count > 0)
     {
         <div class="container rounded p-2">
@@ -57,8 +53,8 @@
                             <label>Email</label>
                         </div>
                         <div class="col-9">
-                            <input id="txtEmail" type="text" class="form-control"/>
-                            <span  class="text-danger"></span>
+                            <input id="txtEmail" type="text" class="form-control" />
+                            <span class="text-danger"></span>
                         </div>
                     </div>
                     <div class="row my-1">
@@ -66,8 +62,8 @@
                             <label>Address</label>
                         </div>
                         <div class="col-9">
-                            <input type="text" class="form-control"/>
-                        <span class="text-danger"></span>
+                            <input type="text" class="form-control" />
+                            <span class="text-danger"></span>
                         </div>
                     </div>
                     <div class="row my-1">
@@ -75,8 +71,8 @@
                             <label>State</label>
                         </div>
                         <div class="col-9">
-                            <input type="text" class="form-control"/>
-                        <span class="text-danger"></span>
+                            <input type="text" class="form-control" />
+                            <span class="text-danger"></span>
                         </div>
                     </div>
                     <div class="row my-1">
@@ -84,7 +80,7 @@
                             <label>ZipCode</label>
                         </div>
                         <div class="col-9">
-                            <input type="text" class="form-control"/>
+                            <input type="text" class="form-control" />
                             <span class="text-danger"></span>
                         </div>
                     </div>
@@ -107,13 +103,15 @@
                                     <h7 class="my-0">@item.AlbumName</h7>
                                 </div>
                                 <span class="text-muted">@item.Price.ToString("c")</span>
-                                @{ total += (item.Price);}
-                                
+                                @{
+                                    total += (item.Price);
+                                }
+
                             </li>
                         }
                         <li class="list-group-item d-flex justify-content-between bg-light">
                             <small class="text-primary">Total (USD)</small>
-                            <strong class="text-primary">$@total</strong>
+                            <strong class="text-primary">@total.ToString("c")</strong>
                         </li>
                     </ul>
                 </div>
@@ -121,14 +119,14 @@
         </div>
         <div class="card-footer">
 
-            <div class="col-12 col-md-6 offset-md-6 col-lg-4 offset-lg-8 text-right">
+            <div class="d-flex justify-content-between">
+                <a asp-action="checkout" asp-controller="Home" class="btn btn-outline-secondary form-control btn-dark">Back to Cart</a>
                 <a asp-action="OrderConfirmation" asp-controller="Home" asp-route-id="1" class="btn btn-success form-control">Place Order</a>
             </div>
         </div>
 
         @*asp-for="OrderHeader.ZipCode"
-
-        asp-validation-for="OrderHeader.ZipCode"*@
+    asp-validation-for="OrderHeader.ZipCode"*@
     }
     else
     {
@@ -148,26 +146,20 @@
                 value = 0;
             }
             document.getElementById("total-price").innerHTML = value * $price;
-
             $input.val(value);
-
         });
-
         $('.plus-btn').on('click', function (e) {
             e.preventDefault();
             var $this = $(this);
             var $input = $this.closest('div').find('input');
             var value = parseInt($input.val());
-
             if (value < 100) {
                 value = value + 1;
             } else {
                 value = 100;
             }
-
             $input.val(value);
         });
-
         $('.like-btn').on('click', function () {
             $(this).toggleClass('is-active');
         });

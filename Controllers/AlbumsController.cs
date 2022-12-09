@@ -52,7 +52,7 @@ namespace FinalProject.Controllers
                     HttpContext.Session.SetObject(SD.SessionCart, sessionList);
                 }
             }
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(AlbumView));
         }
 
         // GET: Albums
@@ -83,6 +83,12 @@ namespace FinalProject.Controllers
 
         // GET: Albums/Create
         public IActionResult Create()
+        {
+            ViewData["ArtistID"] = new SelectList(_context.Artist, "Id", "Name");
+            return View();
+        }
+
+        public IActionResult AlbumView()
         {
             ViewData["ArtistID"] = new SelectList(_context.Artist, "Id", "Name");
             return View();

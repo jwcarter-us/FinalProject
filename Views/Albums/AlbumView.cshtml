@@ -1,0 +1,45 @@
+﻿@model IEnumerable<FinalProject.Models.Album>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<head>
+    <link rel="stylesheet" href="/css/album/AlbumArt.css" media="screen" title="no title" charset="utf-8">
+</head>
+<body class="css-selector">
+    <div>
+        <h1>Best Sellers of the Week</h1>
+        <div class="gallery">
+            <img src="/css/album/Abbey Road.jpg"
+                 class="gallery__photo gallery__photo--p1"
+                 alt="" />
+            <img src="/css/album/ManonTheMoonTheEndofDay.jpg"
+                 class="gallery__photo gallery__photo--p2"
+                 alt="" />
+            <img src="/css/album/Dark_Side_of_the_Moon.png"
+                 class="gallery__photo gallery__photo--p3"
+                 alt="" />
+            <img src="/css/album/MBDTF.jpg"
+                 class="gallery__photo gallery__photo--p4"
+                 alt="" />
+            <img src="/css/album/web.ae_.midnights.review.courtesy.jpg"
+                 class="gallery__photo gallery__photo--p5"
+                 alt="" />
+        </div>
+        <div id="GallaryPadd">
+            <h1></h1>
+            @*<div>
+                <table>
+                    <tr>#1 Abbey Road by the Beatles</tr>
+                    <tr>#2 Dark Side of the Moon by Pink Floyd</tr>
+                    <tr>#3 My Beautiful Dark Twisted Fantasy by Kanye West</tr>
+                    <tr>#4 Midights by Taylor Swift</tr>
+                    <tr>#5 Man on the Moon: The End of Day by Kid Cudi</tr>
+                </table>
+            </div>*@
+        </div>
+    </div>
+</body>
+
+

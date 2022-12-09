@@ -4,99 +4,81 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>@Html.DisplayFor(model => model.Artist.Name)</h1>
 
-<div>
-    <h4>Artist Bio</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2"> 
-            Headshot
-        </dt>
-        <dd class = "col-sm-10">
-            @if (Model.Artist.ArtistPicture != null)
-            {
-                <img width="100" height="150" src="@Url.Action("GetArtistPhoto", "Artists", new {Model.Artist.Id})">
-            }
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Artist.Birthday)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Artist.Birthday)
-        </dd>
-        <dt class = "col-sm-2">
-            Hometown
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Artist.BirthPlace)
-        </dd>
-        <dt class = "col-sm-2">
-            Record Label
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Artist.Label)
-        </dd>
-    </dl>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ti-icons@0.1.2/css/themify-icons.css">
+<link rel="stylesheet" href="/css/artist/ArtistTable.css">
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-4 mb-5 mb-lg-0 wow fadeIn">
+            <div class="card border-0 shadow">
+                @if (Model.Artist.ArtistPicture != null)
+                {
+                    <img src="@Url.Action("GetArtistPhoto", "Artists", new {Model.Artist.Id})" alt="...">
+                }
+                <div class="card-body p-1-9 p-xl-5">
+                    <div class="mb-4">
+                        <h2 class="mb-0">@Html.DisplayFor(model => model.Artist.Name)</h2>
+                    </div>
+                    <ul class="list-unstyled mb-4">
+                        <li class="mb-3"><img id="cake" src="/css/artist/birthday.png" ><i class="far fa-cake display-25 me-3 text-secondary"></i>@Html.DisplayFor(model => model.Artist.Birthday)</img></li>
+                        <li class="mb-3"><a href="#!"><img id="home" src="~/css/artist/home.png" class="fas fa-mobile-alt display-25 me-3 text-secondary">@Html.DisplayFor(model => model.Artist.BirthPlace)</a></li>
+                        <li><a href="#!"><img id=record src="~/css/artist/record-label-meta.png" class="fas fa-map-marker-alt display-25 me-3 text-secondary">@Html.DisplayFor(model => model.Artist.Label)</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="ps-lg-1-6 ps-xl-5">
+                <div class="mb-5 wow fadeIn">
+                    <div class="text-start mb-1-6 wow fadeIn">
+                        <h2 class="h1 mb-0 text-primary">Discography</h2>
+                    </div>
+                </div>
+                <div class="wow fadeIn">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Album Title
+                                </th>
+                                <th>
+                                    Genre
+                                </th>
+                                <th>
+                                    Cover Art
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Albums[0].Price)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Albums)
+                            {
+                                <tr>
+                                    <td>
+                                        <a id="albumArt" class="h5" asp-action="Details" asp-controller="Albums" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.AlbumName)</a>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Genre)
+                                    </td>
+                                    <td>
+                                        @if (item.AlbumArt != null)
+                                        {
+                                            <img width="150" height="150" src="@Url.Action("GetAlbumArt", "Albums", new {item.Id})">
+                                        }
+                                    </td>
+                                    <td>
+                                        $@Html.DisplayFor(modelItem => item.Price)
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Artist.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
-<div>
-    <h3>Discography</h3>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Album Title
-                </th>
-                <th>
-                    Release Date
-                </th>
-                <th>
-                    Genre
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Albums[0].Description)
-                </th>
-                <th>
-                    Cover Art
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Albums[0].Price)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Albums)
-            {
-                <tr>
-                    <td>
-                        <a asp-action="Details" asp-controller="Albums" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.AlbumName)</a>
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ReleaseDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Genre)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Description)
-                    </td>
-                    <td>
-                        @if (item.AlbumArt != null)
-                        {
-                            <img width="150" height="150" src="@Url.Action("GetAlbumArt", "Albums", new {item.Id})">
-                        }
-                    </td>
-                    <td>
-                        $@Html.DisplayFor(modelItem => item.Price)
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
-

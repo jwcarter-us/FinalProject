@@ -9,70 +9,72 @@
 
 <head>
     <script src="https://code.jquery.com/jquery-2.2.4.js" charset="utf-8"></script>
-    <meta name="robots" content="noindex,follow" />
-    <link rel="stylesheet" href="/css/cart/cart.css" media="screen" title="no title" charset="utf-8">
-    <meta name="robots" content="noindex,follow" />
+    <link rel="stylesheet" href="/css/cart/CartPage.css" media="screen" title="no title" charset="utf-8">
 </head>
 <body>
-    <div class="title">
-        Shopping Bag
-    </div>
-    @if (Model.AlbumList.Count > 0)
+    @if(Model.AlbumList.Count > 0)
     {
-        <div class="shopping-cart d-flex">
-            @{
-                var orderTotal = 0.0;
-            }
-            @foreach (var item in Model.AlbumList)
-            {
-                orderTotal += item.Price;
-                <div class="item">
-                    <div class="buttons">
-                        <a asp-action="Remove" asp-route-serviceId=@item.Id class="btn btn-outline-danger"><i class="fas fa-trash"></i></a>
-                        <span class="like-btn"></span>
-                    </div>
-
-                    <div class="image">
-                        <img src="@Url.Action("GetAlbumArt", "Albums", new {item.Id})" alt="" width="100" height="100" />
-                    </div>
-
-                    <div class="description">
-                        <span>@item.AlbumName</span>
-                        <span>@item.Artist.Name</span>
-                    </div>
-                    <div class="text-center">
-
-                    </div>
-
-                    <div class="quantity">
-                        <button id="quantityb" class="plus-btn" type="button" name="button">
-                            <img src="/css/cart/plus.svg" alt="" />
-                        </button>
-                        <input type="text" name="name" value="1">
-
-                        <button id="quantityb" class="minus-btn" type="button" name="button">
-                            <img src="~/css/cart/minus.svg" alt="" />
-                        </button>
-
-                    </div>
-                    <div type="text" name="name" value="15" id="total-price">@item.Price.ToString("c")</div>
-
-
+    <div class="backgroundWhite container">
+        <div class="card">
+            <div id="ShoppingHeader" class="card-header bg-dark text-light ml-0 row container">
+                <div class="col-12 d-none d-md-block col-md-6 pb-1 ">
+                    <img src="~/css/cart/shopping.svg" class="btn-close-white center"></img> &nbsp; Shopping Cart
                 </div>
-            }
-        </div>
-        <div class="card-footer">
-            <div  class ="text-left">
-                <p id="totalprice" class="text-success h5">Total (USD): &nbsp;&nbsp; @orderTotal.ToString("c")</p>
+                <div  class="col-12 col-md-4 offset-md-2 text-right d-flex">
+                    <a id="Back2Shop" asp-action="Index" asp-controller="Home" class="btn btn-outline form-control btn-group-sm">Back to Shop</a>
+                </div>
             </div>
-         
-            <div class="col-12 col-md-6 offset-md-6 col-lg-4 offset-lg-8 text-right">
-                <a asp-action="RingUp" asp-controller="Home" class="btn btn-success form-control">Check Out</a>
+
+            <div class="card-body">
+                @{
+                    var orderTotal = 0.0;
+                }
+                @foreach(var item in Model.AlbumList)
+                {
+                    orderTotal += item.Price;
+                    <div class="row">
+                        <div class="d-none d-md-block col-md-2 text-center py-2">
+                            <img src="@Url.Action("GetAlbumArt", "Albums", new {item.Id})" class="rounded" width="75%" />
+                        </div>
+                        <div class="col-12 col-md-5 text-md-left pt-3">
+                            <h5><strong class="text-primary">@item.AlbumName</strong></h5>
+                            <h5 class="text-secondary">by @item.Artist.Name</h5>
+                        </div>
+                        <div class="col-12 col-md-5 row pt-3">
+                            <div  class="col-6 text-md-right" style="padding-top:5px;">
+                                <h5 id="ItemPrice" class="text-right"><strong class="text-danger">@item.Price.ToString("c")</strong></h5>
+                            </div>
+                            <div id="RemoveButt" class="col-6 text-right">
+                                <a class="btn" style="float:right" asp-action="Remove" asp-route-serviceId=@item.Id>
+                                    <img src="~/css/cart/delete-icn.svg" class="fas fa-trash">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+                @*<div class="row">
+                    <div class="col-12 text-right pr-4">
+                        <p class="text-success h5">Total (USD): &nbsp;&nbsp; @orderTotal.ToString("c")</p>
+                    </div>
+                </div>*@
+                <div class="card-footer">
+                    <div class="row">
+                            <p id="totalprice" class="text-success h5">Total (USD): &nbsp;&nbsp; @orderTotal.ToString("c")</p>
+                        <div id="Payment">
+                            <a asp-action="RingUp" asp-controller="Home" class="btn btn-success form-control">Check Out</a>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
         </div>
-     }
+    </div>
+    }
+    @*<a asp-action="Remove" asp-route-serviceId=@item.Id class="btn btn-outline-danger"></a>*@
+        
      else{
-         <div class="backgroundWhite">No items to the shopping cart</div>
+         <div class="backgroundWhite">No items in the shopping cart</div>
      }
 
     <script type="text/javascript">

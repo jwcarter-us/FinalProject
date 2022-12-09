@@ -1,0 +1,141 @@
+﻿
+body {
+    background-color: #131313;
+}
+
+h1 {
+    text-align: center;
+    padding-bottom: 65px;
+    padding-top: 50px;
+    color: #131313;
+    text-transform: uppercase;
+    letter-spacing: 15px;
+}
+
+.gallery {
+    width: 1000px;
+    margin: 0 auto;
+    position: relative;
+}
+
+#GallaryPadd{
+    height: 800px;
+    padding-top:200px;
+}
+
+#SuperNavBar {
+    background-color: rgba(255,255,255,0.5);
+}
+
+.gallery__photo {
+    width: 250px;
+    height: 250px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    border-radius: 2px;
+    position: absolute;
+    transition: all 0.2s;
+    z-index: 10;
+    outline-offset: 20px;
+}
+
+.gallery__photo--p1 {
+    top: 0;
+    left: 0;
+}
+
+.gallery__photo--p2 {
+    top: 0;
+    right: 0;
+    z-index: 1;
+}
+
+.gallery__photo--p3 {
+    top: 40px;
+    left: 20%;
+}
+
+.gallery__photo--p4 {
+    top: 60px;
+    left: 40%;
+}
+
+.gallery__photo--p5 {
+    top: 40px;
+    left: 60%;
+    z-index: 2;
+}
+
+.gallery__photo:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    transform: scale(1.1) translateY(-20px);
+    z-index: 20;
+}
+
+.gallery:hover .gallery__photo:not(:hover) {
+    transform: scale(0.9);
+}
+
+.css-selector {
+    background: linear-gradient(164deg, #469b00, #2b2b2b, #810c00, #343434);
+    background-size: 800% 800%;
+    -webkit-animation: AnimationName 20s ease infinite;
+    -moz-animation: AnimationName 20s ease infinite;
+    -o-animation: AnimationName 20s ease infinite;
+    animation: AnimationName 20s ease infinite;
+}
+
+@-webkit-keyframes AnimationName {
+    0% {
+        background-position: 57% 0%
+    }
+
+    50% {
+        background-position: 44% 100%
+    }
+
+    100% {
+        background-position: 57% 0%
+    }
+}
+
+@-moz-keyframes AnimationName {
+    0% {
+        background-position: 57% 0%
+    }
+
+    50% {
+        background-position: 44% 100%
+    }
+
+    100% {
+        background-position: 57% 0%
+    }
+}
+
+@-o-keyframes AnimationName {
+    0% {
+        background-position: 57% 0%
+    }
+
+    50% {
+        background-position: 44% 100%
+    }
+
+    100% {
+        background-position: 57% 0%
+    }
+}
+
+@keyframes AnimationName {
+    0% {
+        background-position: 57% 0%
+    }
+
+    50% {
+        background-position: 44% 100%
+    }
+
+    100% {
+        background-position: 57% 0%
+    }
+}

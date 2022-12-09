@@ -1,20 +1,9 @@
-﻿@import url(https://fonts.googleapis.com/css?family=Roboto:300,400,500);
-
+﻿
 * {
     box-sizing: border-box;
 }
 
 html,
-body {
-    margin-top: 100px;
-    margin-bottom: 100px;
-    margin-right: 300px;
-    margin-left: 80px;
-    padding: 0px;
-    margin: 0;
-    font-family: 'Roboto', sans-serif;
-}
-
 .shopping-cart {
     /*position: absolute;
     width: 750px;
@@ -36,6 +25,16 @@ body {
     font-weight: 400;
 }
 
+#Back2Shop {
+    width: 164px;
+    margin-left: auto;
+    margin-right: 0;
+}
+#Payment {
+    width: 300px;
+    margin-left: auto;
+    margin-right: 0;
+}
 .item {
     padding: 20px 30px;
     height: 120px;
@@ -48,10 +47,13 @@ body {
     }
 
 /* Buttons -  Delete and Like */
-.buttons {
-    position: relative;
-    padding-top: 30px;
-    margin-right: 60px;
+
+#RemoveButt {
+    padding-right: 10%;
+}
+#ItemPrice {
+    padding-top: 11px;
+    text-align: right;
 }
 
 .delete-btn {
@@ -63,18 +65,14 @@ body {
     margin-right: 20px;
 }
 
-.like-btn {
-    position: absolute;
-    top: 9px;
-    left: 15px;
-    display: inline-block;
-    background: url("twitter-heart.png");
-    width: 60px;
-    height: 60px;
-    background-size: 2900%;
-    background-repeat: no-repeat;
-    cursor: pointer;
+#ShoppingHeader {
+    margin-left: 0px;
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    padding-left: 10px;
 }
+
 
 .is-active {
     animation-name: animate;
@@ -130,7 +128,7 @@ body {
 
 /* Product Quantity */
 .quantity {
-    padding-top: 20px;
+    padding-top: 19px;
     margin-right: 60px;
     padding-left: 570px
 }
@@ -145,33 +143,24 @@ body {
         font-weight: 300;
     }
 
-button[class*=btn] {
-    background-color: #E1E8EE;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-}
+
 
 #quantityb {
-    width: 30px;
+
+    width: 35px;
+    text-align: center;
     height: 30px;
-    background-color: #E1E8EE;
-    border-radius: 6px;
-    border: none;
+    background-color: #FFFFFF;
+    border-radius: 1px;
+    border: revert;
     cursor: pointer;
 }
 
-.minus-btn img {
-    margin-bottom: 3px;
-}
 
-.plus-btn img {
-    margin-bottom: 3px;
-}
-
-button:focus,
-input:focus {
-    outline: 0;
+#QNumber {
+    padding-bottom: 33px;
+    display: inline-flex;
+    align-items: center;
 }
 
 /* Total Price */
@@ -183,9 +172,11 @@ input:focus {
     color: #43484D;
     font-weight: 300;
 }
+
 #totalprice {
-    width: 20%;
-    margin: 1px
+    text-align: left;
+    width: 30%;
+    margin: 0px
 }
 /* Responsive */
 @media (max-width: 800px) {
