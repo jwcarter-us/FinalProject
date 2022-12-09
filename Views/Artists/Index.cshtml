@@ -1,4 +1,6 @@
 ﻿@model IEnumerable<FinalProject.Models.Artist>
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> signInManager;
 
 @{
     ViewData["Title"] = "Index";
@@ -12,10 +14,12 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-
+@if (signInManager.IsSignedIn(User) && User.IsInRole("Administrator"))
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+}
 <table class="table">
     <thead>
         <tr>
@@ -41,7 +45,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                    <a asp-action="Details" asp-route-id="@Html.DisplayFor(modelItem => item.Name)">Details</a>
             </td>
             <td>
                     @if (item.ArtistPicture != null)
@@ -58,11 +62,14 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Label)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
+                @if (signInManager.IsSignedIn(User) && User.IsInRole("Administrator"))
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                }
         </tr>
 }
     </tbody>

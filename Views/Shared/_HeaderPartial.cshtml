@@ -1,6 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Http
 @using FinalProject.Extentions
+@using Microsoft.AspNetCore.Identity
 @inject IHttpContextAccessor HttpContextAccerssor
+@inject SignInManager<IdentityUser> signInManager;
 <header>
     <nav id="SuperNavBar" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom bg-primary box-shadow mb-3">
         <div class="container-fluid">
@@ -15,39 +17,54 @@
                         <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Albums" asp-action="AlbumView">AlbumArt</a>
+                        <a class="nav-link" asp-area="" asp-controller="Albums" asp-action="AlbumView">Best-Sellers</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Artists" asp-action="Index">Artists</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Albums" asp-action="Index">Albums</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="ArtistAlbums" asp-action="Index">Artist-Albums</a>
-                    </li>
+                    @if(signInManager.IsSignedIn(User))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Albums" asp-action="Index">Albums</a>
+                        </li>
+                    }
+                    @if (signInManager.IsSignedIn(User) && User.IsInRole("Administrator"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Artists" asp-action="Index">Artists</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="ArtistAlbums" asp-action="Index">Artist-Albums</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="Index">Admin</a>
+                        </li>
+                    }
+
                 </ul>
                 <form class="d-flex">
                 @if(HttpContextAccerssor.HttpContext.Session.GetObject<List<int>>(SD.SessionCart) != null)
                 {
+                    @if (signInManager.IsSignedIn(User)){
+                            <button id="CheckOut" class="btn btn-outline-light" type="submit" asp-controller="Home" asp-action="checkout">
+                                <i class="bi-cart-fill me-1"></i>
+                                Cart
+                                @{
+                                    var count = HttpContextAccerssor.HttpContext.Session.GetObject<List<int>>(SD.SessionCart).Count;
+                                }
+                                <span class="badge text-white ms-1 rounded-pill">@count</span>
+                            </button>
+                    }                 
 
-                    
-                    <button id="CheckOut" class="btn btn-outline-light" type="submit" asp-controller="Home" asp-action="checkout"  >
-                        <i class="bi-cart-fill me-1"></i>
-                        Cart
-                        @{
-                            var count = HttpContextAccerssor.HttpContext.Session.GetObject<List<int>>(SD.SessionCart).Count;
-                        }
-                        <span class="badge text-white ms-1 rounded-pill">@count</span>
-                    </button>
                 }
                 else
                 {
-                    <button id="CheckOut" class="btn btn-outline-light" type="submit" asp-controller="Home" asp-action="checkout"  >
-                        <i class="bi-cart-fill me-1"></i>
-                        Cart
-                        <span class="">0</span>
-                    </button>
+                    @if (signInManager.IsSignedIn(User))
+                    {
+                        <button id="CheckOut" class="btn btn-outline-light" type="submit" asp-controller="Home" asp-action="checkout">
+                            <i class="bi-cart-fill me-1"></i>
+                                Cart
+                            <span class="">0</span>
+                         </button>
+                    }
+                    
                 }
                 </form>
                 <partial name="_LoginPartial" />
