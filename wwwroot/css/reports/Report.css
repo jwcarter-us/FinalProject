@@ -1,0 +1,16 @@
+﻿body {
+}
+.reports{
+    align-content: center;
+    margin-left: 50px;
+}
+
+#reportBut {
+    color: aqua;
+    width: 475px;
+    font-size: small;
+}
+
+.h2{
+    font-size: small;
+}

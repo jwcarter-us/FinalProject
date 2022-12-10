@@ -21,6 +21,10 @@ namespace FinalProject.Controllers
         {
             return View();
         }
+        public IActionResult Reports()
+        {
+            return View();
+        }
         [HttpGet]
         public IActionResult CreateRole()
         {
@@ -113,7 +117,7 @@ namespace FinalProject.Controllers
             if (role == null)
             {
                 ViewBag.ErrorMessage = $"Role with Id = {roleId} cannot be found";
-                return View("NotFound");
+                return View("Error");
             }
 
             var model = new List<UserRoleVM>();
@@ -145,11 +149,11 @@ namespace FinalProject.Controllers
         {
             var role = await roleManager.FindByIdAsync(roleId);
 
-            if (role == null)
-            {
-                ViewBag.ErrorMessage = $"Role with Id = {roleId} cannot be found";
-                return View("NotFound");
-            }
+            //if (role == null)
+            //{
+            //    ViewBag.ErrorMessage = $"Role with Id = {roleId} cannot be found";
+            //    return View("Error");
+            //}
 
             for (int i = 0; i < model.Count; i++)
             {
